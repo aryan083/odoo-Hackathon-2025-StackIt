@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { Plus } from 'lucide-react';
 import QuestionList from './QuestionList';
 
-const MainContent: React.FC = () => {
+interface MainContentProps { searchTerm: string; }
+
+const MainContent: React.FC<MainContentProps> = ({ searchTerm }) => {
   return (
     <div className="py-4 bg-white border-b border-gray-200 dark:bg-neutral-800 dark:border-neutral-700">
       <div className="max-w-5xl mx-auto px-4">
         <div className="flex items-center justify-between gap-4">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Questions</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Questions</h1>
 
           <div className="flex items-center gap-4">
             <select
@@ -31,7 +33,7 @@ const MainContent: React.FC = () => {
         </div>
 
         <div className="py-6">
-          <QuestionList />
+          <QuestionList searchTerm={searchTerm} />
         </div>
       </div>
     </div>

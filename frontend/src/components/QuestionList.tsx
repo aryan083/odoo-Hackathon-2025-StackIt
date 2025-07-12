@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ArrowUp, ArrowDown } from 'lucide-react';
 
 interface Question {
@@ -40,12 +40,42 @@ const mockQuestions: Question[] = [
     votes: 15,
     answers: 5,
   },
+  {
+    id: 4,
+    title: 'Difference between interface and type in TypeScript?',
+    body: 'Could someone explain when to use interface vs type aliases, especially for complex types?',
+    username: 'charlie',
+    tags: ['typescript', 'types', 'interfaces'],
+    votes: 15,
+    answers: 5,
+  },
+    id: 5,
+    title: 'Difference between interface and type in TypeScript?',
+    body: 'Could someone explain when to use interface vs type aliases, especially for complex types?',
+    username: 'charlie',
+    tags: ['typescript', 'types', 'interfaces'],
+    votes: 15,
+    answers: 5,
+  },
 ];
 
-const QuestionList: React.FC = () => {
+interface QuestionListProps {
+  searchTerm?: string;
+}
+
+const QuestionList: React.FC<QuestionListProps> = ({ searchTerm = '' }) => {
+  const filteredQuestions = useMemo(() => {
+    const term = searchTerm.toLowerCase().trim();
+    if (!term) return mockQuestions;
+    return mockQuestions.filter((q) =>
+      (q.title + ' ' + q.body + ' ' + q.tags.join(' '))
+        .toLowerCase()
+        .includes(term)
+    );
+  }, [searchTerm]);
   return (
     <div className="space-y-6">
-      {mockQuestions.map((q) => (
+      {filteredQuestions.map((q) => (
         <div
           key={q.id}
           className="bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-lg p-4 hover:shadow-md transition max-w-5xl mx-auto"

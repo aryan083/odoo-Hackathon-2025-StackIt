@@ -51,15 +51,14 @@ const Header: React.FC = () => {
 
   return (
     <header className="sticky top-0 inset-x-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-sm dark:border-neutral-700 dark:bg-neutral-900/80">
-      <nav className="max-w-[85rem] mx-auto w-full flex md:grid md:grid-cols-3 items-center gap-5 px-4 py-4 sm:px-6 lg:px-8">
+      <nav className="max-w-5xl mx-auto w-full flex md:grid md:grid-cols-3 items-center gap-5 px-4 py-4 sm:px-6 lg:px-8">
         
         {/* Logo */}
         <div className="flex items-center justify-between md:col-span-1">
-          <a href="#" aria-label="Preline" className="flex-none rounded-md text-xl font-semibold text-black dark:text-white">
-            <svg className="h-8 w-auto text-blue-600" viewBox="0 0 50 50" fill="currentColor">
-            <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" className="text-2xl font-bold">StackIt</text>
-            </svg>
-          </a>
+        <a href="#" aria-label="StackIt" className="flex-none rounded-md text-xl font-semibold text-black dark:text-white">
+            <span className="text-blue-600 text-3xl font-bold">StackIt.</span>
+        </a>
+
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
