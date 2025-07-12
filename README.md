@@ -11,7 +11,9 @@ This project addresses **Problem Statement 2**: Building a collaborative forum t
 ## 👥 Team
 
 **Team Name:** Skill Issue  
-**Contact Email:** aryanmahida2@gmaill.com, jaytm2210@gmail.com, umanghirani.exe@gmail.
+**Team Members:** Aryan Mahida, Jay Mangukiya, Umang Hirani
+**Team Lead Details:** Contact: 70463 00800
+**Contact Email:** aryanmahida2@gmaill.com, jaytm2210@gmail.com, umanghirani.exe@gmail.com
 
 ---
 
