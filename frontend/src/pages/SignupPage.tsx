@@ -20,7 +20,8 @@ export default function SignupPage() {
       alert('Sign up failed');
       console.error(err);
     }
-    };
+
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-neutral-950 py-8 px-2">
@@ -141,3 +142,4 @@ export default function SignupPage() {
     </div>
   );
 }
+
