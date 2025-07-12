@@ -1,14 +1,26 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { signup } from "../api/auth";
 
 export default function SignupPage() {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle signup logic here
-  };
+        try {
+      const res = await signup(username, email, password);
+      localStorage.setItem('token', res.token);
+      navigate('/home');
+    } catch (err) {
+      alert('Sign up failed');
+      console.error(err);
+    }
+    };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-neutral-950 py-8 px-2">
@@ -68,8 +80,8 @@ export default function SignupPage() {
                     className="py-2.5 sm:py-3 px-4 block w-full border border-gray rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                     required
                     aria-describedby="email-error"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
                   />
                   <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                     <svg className="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">

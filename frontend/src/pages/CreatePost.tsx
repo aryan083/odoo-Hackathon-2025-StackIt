@@ -2,14 +2,16 @@ import Tiptap from "../components/TipTap";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 import { X, Plus, ArrowLeft } from "lucide-react";
-import { useState } from "react";
+import { createQuestion } from "../api/questions";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function CreatePost() {
+  const [title, setTitle] = useState("");
   const navigate = useNavigate();
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
-
+  
   const addTag = () => {
     if (tagInput.trim() && !tags.includes(tagInput.trim())) {
       setTags([...tags, tagInput.trim()]);
@@ -20,6 +22,8 @@ function CreatePost() {
   const removeTag = (tagToRemove: string) => {
     setTags(tags.filter(tag => tag !== tagToRemove));
   };
+
+  const [loading, setLoading] = useState(false);
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -48,7 +52,9 @@ function CreatePost() {
         
         <div className="mb-4">
           <Input
-            className="text-lg font-medium mb-2 bg-muted/50 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary w-full"
+            value={title}
+            onChange={(e)=>setTitle(e.target.value)}
+            className="text-lg font-medium mb-2 bg-muted/50 border border-border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary w-full"
             placeholder="Title (e.g. How do I use TipTap with React?)"
             maxLength={120}
           />
@@ -101,9 +107,24 @@ function CreatePost() {
         </div>
 
         <div className="flex justify-end">
-          <Button className="px-6 py-2 rounded-lg text-base font-semibold border border-primary bg-primary text-primary-foreground hover:bg-primary/90 transition">
-            Post
-          </Button>
+          <Button
+            onClick={async ()=>{
+              const bodyHtml = (document.querySelector('.tiptap') as HTMLElement)?.innerHTML || '';
+              setLoading(true);
+              try {
+                await createQuestion(title, bodyHtml, tags);
+                navigate('/home');
+              } catch(err){
+                alert('Failed to post');
+                console.error(err);
+              } finally {
+                setLoading(false);
+              }
+            }}
+            disabled={loading || !title.trim()}
+            className="px-6 py-2 rounded-lg text-base font-semibold border border-primary bg-primary text-primary-foreground hover:bg-primary/90 transition">
+             Post
+           </Button>
         </div>
       </div>
     </div>
