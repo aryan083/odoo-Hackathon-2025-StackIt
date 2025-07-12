@@ -43,8 +43,8 @@ function CreatePost() {
           </Button>
         </div>
 
-        <h2 className="text-2xl font-semibold mb-2">Create a Post</h2>
-        <p className="text-muted-foreground mb-6">Share your question, idea, or story with the community.</p>
+        <h2 className="text-2xl font-semibold mb-2">Ask a Question</h2>
+        <p className="text-muted-foreground mb-6">Share your doubts with the community.</p>
         
         <div className="mb-4">
           <Input
