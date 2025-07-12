@@ -1,0 +1,49 @@
+{
+  "question": {
+    "id": "1",
+    "title": "How do I implement authentication in a React app with JWT?",
+    "body": "<h2>I'm building a React application and need to implement user authentication.</h2><p>I want to use JWT tokens for authentication. Can someone help me with:</p><ul><li>Setting up JWT token storage</li><li>Creating protected routes</li><li>Handling token refresh</li><li>Logout functionality</li></ul><p>I'm using React Router for navigation and localStorage for token storage. Any best practices or security considerations would be greatly appreciated!</p>",
+    "tags": ["React", "JWT", "Authentication", "JavaScript"],
+    "author": {
+      "id": "user1",
+      "username": "john_doe"
+    },
+    "createdAt": "2024-01-15T10:30:00Z",
+    "votes": 15
+  },
+  "answers": [
+    {
+      "id": "answer1",
+      "body": "<p>Here's a comprehensive guide to implement JWT authentication in React:</p><h3>1. Token Storage</h3><pre><code>// Store token in localStorage or httpOnly cookies for better security\nlocalStorage.setItem('token', jwtToken);\n</code></pre><h3>2. Protected Routes</h3><p>Create a PrivateRoute component that checks for valid tokens:</p><pre><code>const PrivateRoute = ({ children }) => {\n  const token = localStorage.getItem('token');\n  return token ? children : <Navigate to='/login' />;\n};\n</code></pre><h3>3. API Calls</h3><p>Include the token in your API headers:</p><pre><code>const headers = {\n  'Authorization': `Bearer ${token}`,\n  'Content-Type': 'application/json'\n};\n</code></pre>",
+      "author": {
+        "id": "user2",
+        "username": "react_expert"
+      },
+      "createdAt": "2024-01-15T11:00:00Z",
+      "votes": 8,
+      "isAccepted": true
+    },
+    {
+      "id": "answer2",
+      "body": "<p>I'd recommend using a more secure approach with httpOnly cookies instead of localStorage:</p><h3>Security Benefits:</h3><ul><li>Tokens are not accessible via JavaScript (XSS protection)</li><li>Automatic token inclusion in requests</li><li>Better CSRF protection</li></ul><h3>Implementation:</h3><pre><code>// Backend sets httpOnly cookie\nres.cookie('token', jwtToken, {\n  httpOnly: true,\n  secure: process.env.NODE_ENV === 'production',\n  sameSite: 'strict'\n});\n</code></pre><p>This approach is more secure than localStorage, especially for production applications.</p>",
+      "author": {
+        "id": "user3",
+        "username": "security_guru"
+      },
+      "createdAt": "2024-01-15T12:15:00Z",
+      "votes": 12,
+      "isAccepted": false
+    },
+    {
+      "id": "answer3",
+      "body": "<p>For token refresh, you can implement an interceptor:</p><pre><code>// Axios interceptor example\naxios.interceptors.response.use(\n  (response) => response,\n  async (error) => {\n    if (error.response.status === 401) {\n      // Try to refresh token\n      const newToken = await refreshToken();\n      if (newToken) {\n        // Retry original request\n        return axios.request(error.config);\n      } else {\n        // Redirect to login\n        window.location.href = '/login';\n      }\n    }\n    return Promise.reject(error);\n  }\n);\n</code></pre><p>This automatically handles token expiration and refresh without user intervention.</p>",
+      "author": {
+        "id": "user4",
+        "username": "frontend_dev"
+      },
+      "createdAt": "2024-01-15T14:20:00Z",
+      "votes": 6,
+      "isAccepted": false
+    }
+  ]
+} 
