@@ -1,0 +1,47 @@
+.tiptap {
+  min-height: 200px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 1rem;
+  background: #fff;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.control-group {
+  margin-bottom: 0.5rem;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.button-group button {
+  background: #f5f5f5;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  padding: 0.4em 0.8em;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s, color 0.2s;
+  color: #222;
+}
+
+.button-group button.is-active,
+.button-group button:active {
+  background: #165cfa;
+  color: #fff;
+  border-color: #165cfa;
+}
+
+.button-group button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tiptap:focus {
+  outline: 2px solid #165cfa;
+  outline-offset: 2px;
+}
