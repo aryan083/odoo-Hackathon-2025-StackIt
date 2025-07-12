@@ -12,7 +12,7 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-between md:col-span-1">
           <a href="#" aria-label="Preline" className="flex-none rounded-md text-xl font-semibold text-black dark:text-white">
             <svg className="h-8 w-auto text-blue-600" viewBox="0 0 50 50" fill="currentColor">
-              <path d="M41.607 20.116c1.117.629 1.5 2.04.88 3.157l-9.826 17.436c-.63 1.118-2.04 1.5-3.158.88l-9.856-5.54-4.897 8.68c-.63 1.118-2.04 1.5-3.158.88l-7.83-4.407a2.333 2.333 0 0 1-.88-3.158L27.356 3.41c.63-1.118 2.04-1.5 3.158-.88l15.73 8.85c1.118.63 1.51 2.04.88 3.158l-5.517 9.578z" />
+            <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" className="text-2xl font-bold">StackIt</text>
             </svg>
           </a>
 
