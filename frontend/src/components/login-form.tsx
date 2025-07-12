@@ -25,14 +25,14 @@ export function LoginForm({
             <Label htmlFor="password">Password</Label>
             <a
               href="#"
-              className="ml-auto text-sm underline-offset-4 hover:underline"
+              className="ml-auto text-blue-600 text-sm underline-offset-4 hover:underline"
             >
               Forgot your password?
             </a>
           </div>
           <Input id="password" type="password" required />
         </div>
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full bg-blue-600">
           Login
         </Button>
         <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
