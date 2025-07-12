@@ -1,99 +1,100 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
 import Tiptap from "../components/TipTap";
-import { 
-  ThumbsUp, 
-  ThumbsDown, 
-  CheckCircle, 
-  User, 
-  Calendar,
-  Tag,
-  MessageSquare,
+import {
   ArrowUp,
   ArrowDown,
-  ArrowLeft
+  ArrowLeft,
+  Tag,
+  MessageSquare,
+  CheckCircle,
+  User,
+  Calendar,
 } from "lucide-react";
-import data from "../data.json";
+import { getQuestion, voteQuestion } from "../api/questions";
+import type { Question } from "../api/questions";
+import { listAnswers, addAnswer, voteAnswer, acceptAnswer } from "../api/answers";
+import type { Answer } from "../api/answers";
+import { useAuth } from "../contexts/AuthContext";
 
-interface Answer {
-  id: string;
-  body: string;
-  author: {
-    id: string;
-    username: string;
-  };
-  createdAt: string;
-  votes: number;
-  isAccepted: boolean;
-}
 
-interface Question {
-  id: string;
-  title: string;
-  body: string;
-  tags: string[];
-  author: {
-    id: string;
-    username: string;
-  };
-  createdAt: string;
-  votes: number;
-}
 
 export default function QuestionDetail() {
   const { questionId } = useParams<{ questionId: string }>();
+  const { user: currentUser } = useAuth();
   const navigate = useNavigate();
   const [question, setQuestion] = useState<Question | null>(null);
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAnswerForm, setShowAnswerForm] = useState(false);
-  const [newAnswer, setNewAnswer] = useState("");
 
   useEffect(() => {
-    // Simulate API call delay
-    setTimeout(() => {
-      setQuestion(data.question);
-      setAnswers(data.answers);
-      setLoading(false);
-    }, 500);
+    const fetchData = async () => {
+      if (!questionId) return;
+      try {
+        setLoading(true);
+        const q = await getQuestion(questionId);
+        const ans = await listAnswers(questionId);
+        setQuestion(q);
+        setAnswers(ans);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
   }, [questionId]);
 
   const handleSubmitAnswer = async () => {
-    // Simulate adding a new answer
-    const newAnswerObj: Answer = {
-      id: `answer${Date.now()}`,
-      body: newAnswer,
-      author: {
-        id: "currentUser",
-        username: "current_user"
-      },
-      createdAt: new Date().toISOString(),
-      votes: 0,
-      isAccepted: false
-    };
+    if (!questionId) return;
+    // Grab HTML from the TipTap editor rendered in the answer form
+    const bodyHtml = (document.querySelector('.tiptap') as HTMLElement)?.innerHTML || '';
+    if (!bodyHtml.trim()) return;
 
-    setAnswers([...answers, newAnswerObj]);
-    setNewAnswer("");
-    setShowAnswerForm(false);
+    try {
+      await addAnswer(questionId, bodyHtml);
+      const updated = await listAnswers(questionId);
+      setAnswers(updated);
+      setShowAnswerForm(false);
+    } catch (err) {
+      console.error(err);
+      alert('Failed to post answer');
+    }
   };
 
   const handleVote = async (answerId: string, vote: 1 | -1) => {
-    // Simulate voting
-    setAnswers(answers.map(answer => 
-      answer.id === answerId 
-        ? { ...answer, votes: answer.votes + vote }
-        : answer
-    ));
+    if (!questionId) return;
+    try {
+      await voteAnswer(questionId, answerId, vote);
+      const updated = await listAnswers(questionId);
+      setAnswers(updated);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleAcceptAnswer = async (answerId: string) => {
-    // Simulate accepting answer
-    setAnswers(answers.map(answer => ({
-      ...answer,
-      isAccepted: answer.id === answerId
-    })));
+    if (!questionId) return;
+    try {
+      await acceptAnswer(questionId, answerId);
+      const updated = await listAnswers(questionId);
+      setAnswers(updated);
+    } catch (err) {
+      console.error(err);
+      alert('Unable to accept answer');
+    }
+  };
+
+  const handleQuestionVote = async (vote: 1 | -1) => {
+    if (!questionId || !question) return;
+    try {
+      const newTally = await voteQuestion(questionId, vote);
+      setQuestion({ ...question, votes: newTally });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   if (loading) {
@@ -132,11 +133,11 @@ export default function QuestionDetail() {
           <div className="flex items-start gap-6">
             {/* Voting */}
             <div className="flex flex-col items-center gap-3">
-              <button className="p-3 hover:bg-blue-50 hover:border-blue-300 rounded-lg transition-all duration-200 border border-gray-200 hover:shadow-md">
+              <button disabled={!currentUser} onClick={() => handleQuestionVote(1)} className="p-3 hover:bg-blue-50 hover:border-blue-300 rounded-lg transition-all duration-200 border border-gray-200 hover:shadow-md">
                 <ArrowUp size={20} className="text-gray-600 hover:text-blue-600 transition-colors" />
               </button>
               <span className="text-xl font-bold text-gray-800">{question.votes}</span>
-              <button className="p-3 hover:bg-red-50 hover:border-red-300 rounded-lg transition-all duration-200 border border-gray-200 hover:shadow-md">
+              <button disabled={!currentUser} onClick={() => handleQuestionVote(-1)} className="p-3 hover:bg-red-50 hover:border-red-300 rounded-lg transition-all duration-200 border border-gray-200 hover:shadow-md">
                 <ArrowDown size={20} className="text-gray-600 hover:text-red-600 transition-colors" />
               </button>
             </div>
@@ -196,6 +197,7 @@ export default function QuestionDetail() {
                   {/* Voting */}
                   <div className="flex flex-col items-center gap-3">
                     <button 
+                      disabled={!currentUser}
                       onClick={() => handleVote(answer.id, 1)}
                       className="p-3 hover:bg-green-50 hover:border-green-300 rounded-lg transition-all duration-200 border border-gray-200 hover:shadow-md"
                     >
@@ -203,6 +205,7 @@ export default function QuestionDetail() {
                     </button>
                     <span className="text-xl font-bold text-gray-800">{answer.votes}</span>
                     <button 
+                      disabled={!currentUser}
                       onClick={() => handleVote(answer.id, -1)}
                       className="p-3 hover:bg-red-50 hover:border-red-300 rounded-lg transition-all duration-200 border border-gray-200 hover:shadow-md"
                     >
@@ -231,7 +234,7 @@ export default function QuestionDetail() {
                           <span>{new Date(answer.createdAt).toLocaleDateString()}</span>
                         </div>
                       </div>
-                      {!answer.isAccepted && question.author.id === "user1" && (
+                      {!answer.isAccepted && currentUser?._id === question.author._id && (
                         <button
                           onClick={() => handleAcceptAnswer(answer.id)}
                           className="flex items-center gap-2 text-green-600 hover:text-green-700 font-medium border border-green-200 px-4 py-2 rounded-lg hover:bg-green-50 hover:border-green-300 transition-all duration-200"
@@ -250,7 +253,7 @@ export default function QuestionDetail() {
           {/* Add Answer Button */}
           <div className="mt-8 pt-6 border-t border-gray-200">
             <Button
-              onClick={() => setShowAnswerForm(true)}
+              onClick={() => currentUser ? setShowAnswerForm(true) : alert('Please log in to answer')}
               className="bg-[#165cfa] text-white hover:bg-[#165cfa]/90 border border-[#165cfa] px-6 py-3 text-lg font-medium transition-all duration-200 hover:shadow-lg"
             >
               <MessageSquare size={20} className="mr-2" />

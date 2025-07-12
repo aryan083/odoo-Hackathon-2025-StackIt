@@ -4,17 +4,28 @@
 import { Schema, model, Types } from 'mongoose';
 import { UserDocument } from './User.ts';
 
+export interface IVote {
+  user: Types.ObjectId | UserDocument;
+  value: 1 | -1;
+}
+
 export interface IQuestion {
   title: string;
   body: string;
   tags: string[];
   author: Types.ObjectId | UserDocument;
   views: number;
-  acceptedAnswer?: Types.ObjectId;
+  votes: IVote[];
+  acceptedAnswers: Types.ObjectId[];
   status: 'published' | 'pending' | 'rejected' | 'deleted';
   createdAt: Date;
   updatedAt: Date;
 }
+
+const VoteSchema = new Schema<IVote>({
+  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  value: { type: Number, enum: [1, -1], required: true }
+});
 
 const QuestionSchema = new Schema<IQuestion>(
   {
@@ -23,7 +34,8 @@ const QuestionSchema = new Schema<IQuestion>(
     tags: [{ type: String, index: true }],
     author: { type: Schema.Types.ObjectId, ref: 'User', required: true, index: true },
     views: { type: Number, default: 0 },
-    acceptedAnswer: { type: Schema.Types.ObjectId, ref: 'Answer' },
+    votes: { type: [VoteSchema], default: [] },
+    acceptedAnswers: { type: [Schema.Types.ObjectId], ref: 'Answer', default: [] },
     status: {
       type: String,
       enum: ['published', 'pending', 'rejected', 'deleted'],

@@ -23,6 +23,8 @@ const updateSchema = Joi.object({
   tags: Joi.array().items(Joi.string().trim().min(1)).max(5)
 }).min(1);
 
+const voteSchema = Joi.object({ vote: Joi.number().valid(1, -1).required() });
+
 /* -------------------- Helpers -------------------- */
 const isOwner = (userId: string, author: unknown): boolean =>
   userId === String(author);
@@ -94,6 +96,23 @@ router.put(
     res.json({ question });
   }
 );
+
+router.post('/:questionId/vote', requireAuth(), validate({ body: voteSchema }), async (req, res) => {
+  const { questionId } = req.params;
+  if (!Types.ObjectId.isValid(questionId)) return res.status(400).json({ message: 'Bad id' });
+
+  const question = await Question.findById(questionId);
+  if (!question) return res.status(404).json({ message: 'Not found' });
+
+  const current = (req as RequestWithUser).user;
+  // Remove previous vote, if any
+  question.votes = question.votes.filter((v) => String(v.user) !== current.id);
+  // Push new vote
+  question.votes.push({ user: current._id, value: req.body.vote });
+  await question.save();
+
+  res.json({ votes: question.votes });
+});
 
 router.delete('/:questionId', requireAuth(), async (req, res) => {
   const { questionId } = req.params;

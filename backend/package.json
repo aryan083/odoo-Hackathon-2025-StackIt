@@ -8,6 +8,7 @@
     "start": "tsc && node dist/index.js",
     "dev": "nodemon --watch src --exec \"node --loader ts-node/esm\" src/index.ts",
     "seed:admin": "node --loader ts-node/esm ./scripts/createAdmin.ts",
+    "seed:dummy": "node --loader ts-node/esm ./scripts/seedDummyData.ts",
     "build": "tsc",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write \"src/**/*.ts\""

@@ -124,7 +124,10 @@ router.post('/:aid/accept', requireAuth(), async (req, res) => {
   const current = (req as RequestWithUser).user;
   if (String(question.author) !== current.id) return res.status(403).json({ message: 'Forbidden' });
 
-  await Question.updateOne({ _id: qid }, { acceptedAnswer: aid });
+  if (!question.acceptedAnswers.includes(aid as unknown as Types.ObjectId)) {
+    question.acceptedAnswers.push(aid as unknown as Types.ObjectId);
+    await question.save();
+  }
   await Answer.updateOne({ _id: aid }, { isAccepted: true });
 
   res.status(200).json({ accepted: aid });

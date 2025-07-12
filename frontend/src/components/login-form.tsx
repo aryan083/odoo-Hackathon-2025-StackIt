@@ -5,12 +5,15 @@ import { Label } from "../components/ui/label"
 
 import { useNavigate } from 'react-router-dom';
 import { login } from "../api/auth";
+import { getMe } from "../api/users";
+import { useAuth } from "../contexts/AuthContext";
 
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+  const { setUser } = useAuth();
   const navigate = useNavigate();
 
   return (
@@ -24,6 +27,8 @@ export function LoginForm({
           const password = formData.get('password') as string;
           const res = await login(email, password);
           localStorage.setItem('token', res.token);
+          const me = await getMe();
+          setUser(me);
           // simple redirect to home
           navigate('/home');
         } catch (err) {
