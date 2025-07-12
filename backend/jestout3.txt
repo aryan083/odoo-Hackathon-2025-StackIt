@@ -1,0 +1,150 @@
+ts-jest[ts-jest-transformer] (WARN) Define `ts-jest` config under `globals` is deprecated. Please do
+transform: {
+    <transform_regex>: ['ts-jest', { /* ts-jest config goes here in Jest */ }],
+},
+See more at https://kulshekhar.github.io/ts-jest/docs/getting-started/presets#advanced
+  console.log
+    [dotenv@17.2.0] injecting env (6) from .env (tip: ⚙️  suppress all logs with { quiet: true })
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] })
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] })
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: 🔐 encrypt with dotenvx: https://dotenvx.com)
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+(node:15664) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[0mPOST /api/auth/register [32m201[0m 124.544 ms - 472[0m
+  console.log
+    REGISTER_RES 201 {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODcyMTQ2OTg2YTY2YjQ1MDUyZmFkMWQiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc1MjMwNjc5NCwiZXhwIjoxNzUyOTExNTk0fQ.liv0X8DD-kCclU6TZHo5ciRG6y0xc0lk-qCiAJGan1Q',
+      user: {
+        username: 'bob',
+        email: 'bob@ex.com',
+        password: '$2b$10$Kd1jBOIHQOMIEEfJLhfYqOVxZXDhkEgY5prTlxIi1PlEtIMxzNVfS',
+        role: 'USER',
+        banned: false,
+        _id: '6872146986a66b45052fad1d',
+        createdAt: '2025-07-12T07:53:13.982Z',
+        updatedAt: '2025-07-12T07:53:13.982Z',
+        __v: 0
+      }
+    }
+
+      at Object.<anonymous> (tests/auth.test.ts:12:13)
+
+[0mPOST /api/auth/login [32m200[0m 94.373 ms - 472[0m
+PASS tests/auth.test.ts (7.987 s)
+  Auth routes
+    √ registers a user then logs in (293 ms)
+
+  console.log
+    [dotenv@17.2.0] injecting env (6) from .env (tip: ⚙️  override existing env vars with { override: true })
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: 🔐 encrypt with dotenvx: https://dotenvx.com)
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: 🔐 encrypt with dotenvx: https://dotenvx.com)
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] })
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+[0mPOST /api/auth/register [32m201[0m 96.133 ms - 474[0m
+[0mPOST /api/auth/login [32m200[0m 76.745 ms - 474[0m
+[0mPOST /api/questions [33m400[0m 7.165 ms - 96[0m
+FAIL tests/tags.test.ts
+  Tags route
+    × returns popular tags with counts (209 ms)
+
+  ● Tags route › returns popular tags with counts
+
+    expected 201 "Created", got 400 "Bad Request"
+
+    [0m [90m 14 |[39m       [33m.[39m[36mset[39m(authHeader(token))
+     [90m 15 |[39m       [33m.[39msend({ title[33m:[39m [32m'Another Q'[39m[33m,[39m body[33m:[39m [32m'Body'[39m[33m,[39m tags[33m:[39m [[32m'js'[39m[33m,[39m [32m'node'[39m] })
+    [31m[1m>[22m[39m[90m 16 |[39m       [33m.[39mexpect([35m201[39m)[33m;[39m
+     [90m    |[39m        [31m[1m^[22m[39m
+     [90m 17 |[39m
+     [90m 18 |[39m     [36mconst[39m tagRes [33m=[39m [36mawait[39m request(app)[33m.[39m[36mget[39m([32m'/api/tags'[39m)[33m.[39mexpect([35m200[39m)[33m;[39m
+     [90m 19 |[39m     expect(tagRes[33m.[39mbody[33m.[39mlength)[33m.[39mtoBeGreaterThanOrEqual([35m2[39m)[33m;[39m[0m
+
+      at Object.<anonymous> (tests/tags.test.ts:16:8)
+      ----
+      at Test._assertStatus (node_modules/supertest/lib/test.js:252:14)
+      at node_modules/supertest/lib/test.js:308:13
+      at Test._assertFunction (node_modules/supertest/lib/test.js:285:13)
+      at Test.assert (node_modules/supertest/lib/test.js:164:23)
+      at Server.localAssert (node_modules/supertest/lib/test.js:120:14)
+
+  console.log
+    [dotenv@17.2.0] injecting env (6) from .env (tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit)
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: 🔐 encrypt with dotenvx: https://dotenvx.com)
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`)
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' })
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+[0mPOST /api/auth/register [32m201[0m 108.700 ms - 476[0m
+[0mPOST /api/auth/login [32m200[0m 73.890 ms - 476[0m
+[0mPOST /api/questions [33m400[0m 2.722 ms - 96[0m
+FAIL tests/questions.test.ts
+  Questions routes
+    × creates a question then lists it (218 ms)
+
+  ● Questions routes › creates a question then lists it
+
+    expected 201 "Created", got 400 "Bad Request"
+
+    [0m [90m 16 |[39m       [33m.[39m[36mset[39m(authHeader(token))
+     [90m 17 |[39m       [33m.[39msend({ title[33m:[39m [32m'Test question'[39m[33m,[39m body[33m:[39m [32m'Some body'[39m[33m,[39m tags[33m:[39m [[32m'tag1'[39m[33m,[39m [32m'tag2'[39m] })
+    [31m[1m>[22m[39m[90m 18 |[39m       [33m.[39mexpect([35m201[39m)[33m;[39m
+     [90m    |[39m        [31m[1m^[22m[39m
+     [90m 19 |[39m
+     [90m 20 |[39m     expect(createRes[33m.[39mbody[33m.[39mquestion[33m.[39mtitle)[33m.[39mtoBe([32m'Test question'[39m)[33m;[39m
+     [90m 21 |[39m[0m
+
+      at Object.<anonymous> (tests/questions.test.ts:18:8)
+      ----
+      at Test._assertStatus (node_modules/supertest/lib/test.js:252:14)
+      at node_modules/supertest/lib/test.js:308:13
+      at Test._assertFunction (node_modules/supertest/lib/test.js:285:13)
+      at Test.assert (node_modules/supertest/lib/test.js:164:23)
+      at Server.localAssert (node_modules/supertest/lib/test.js:120:14)
+
+Test Suites: 2 failed, 1 passed, 3 total
+Tests:       2 failed, 1 passed, 3 total
+Snapshots:   0 total
+Time:        12.089 s, estimated 14 s
+Ran all test suites.
