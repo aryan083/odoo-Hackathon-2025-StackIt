@@ -1,8 +1,8 @@
-# StackIt – A Minimal Q&A Forum Platform
+# StackIt - A Minimal Q&A Forum Platform
 
 ## 🧠 Problem Statement
 
-StackIt aims to simplify the online Q&A experience for learners, educators, and developers. Most existing platforms are feature-heavy, cluttered, and overwhelming for newcomers. StackIt solves this by focusing only on the core functionalities: **asking questions**, **answering**, **voting**, and **collaborating** — without distractions.
+StackIt aims to simplify the online Q&A experience for learners, educators, and developers. Most existing platforms are feature-heavy, cluttered, and overwhelming for newcomers. StackIt solves this by focusing only on the core functionalities: **asking questions**, **answering**, **voting**, and **collaborating** - without distractions.
 
 This project addresses **Problem Statement 2**: Building a collaborative forum that supports rich content, structured tagging, and interaction through notifications, all in a lightweight interface.
 
