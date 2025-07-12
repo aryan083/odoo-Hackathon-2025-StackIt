@@ -49,6 +49,7 @@ const mockQuestions: Question[] = [
     votes: 15,
     answers: 5,
   },
+  {
     id: 5,
     title: 'Difference between interface and type in TypeScript?',
     body: 'Could someone explain when to use interface vs type aliases, especially for complex types?',
