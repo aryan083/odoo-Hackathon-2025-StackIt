@@ -1,8 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import NotificationDropdown from './NotificationDropdown';
+import { notificationService } from '../services/notificationService';
+import { useNotificationSound } from '../hooks/useNotificationSound';
+import type { Notification } from '../types/notification';
 
 const Header: React.FC = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+
+  const unreadCount = notifications.filter(n => !n.isRead).length;
+
+  // Use notification sound
+  useNotificationSound(unreadCount);
+
+  // Subscribe to notification service
+  useEffect(() => {
+    const unsubscribe = notificationService.subscribe(setNotifications);
+    return unsubscribe;
+  }, []);
+
+  const handleMarkAsRead = (notificationId: string) => {
+    notificationService.markAsRead(notificationId);
+  };
+
+  const handleMarkAllAsRead = () => {
+    notificationService.markAllAsRead();
+  };
+
+  // Close dropdowns when clicking outside
+  const notificationRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
+        setIsNotificationOpen(false);
+      }
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <header className="sticky top-0 inset-x-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-sm dark:border-neutral-700 dark:bg-neutral-900/80">
@@ -12,7 +57,7 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-between md:col-span-1">
           <a href="#" aria-label="Preline" className="flex-none rounded-md text-xl font-semibold text-black dark:text-white">
             <svg className="h-8 w-auto text-blue-600" viewBox="0 0 50 50" fill="currentColor">
-              <path d="M41.607 20.116c1.117.629 1.5 2.04.88 3.157l-9.826 17.436c-.63 1.118-2.04 1.5-3.158.88l-9.856-5.54-4.897 8.68c-.63 1.118-2.04 1.5-3.158.88l-7.83-4.407a2.333 2.333 0 0 1-.88-3.158L27.356 3.41c.63-1.118 2.04-1.5 3.158-.88l15.73 8.85c1.118.63 1.51 2.04.88 3.158l-5.517 9.578z" />
+            <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" className="text-2xl font-bold">StackIt</text>
             </svg>
           </a>
 
@@ -71,15 +116,20 @@ const Header: React.FC = () => {
 
         {/* User Area: Notifications + Avatar */}
         <div className="md:col-span-1 flex justify-end items-center gap-x-2">
-          {/* Notification Icon */}
-          <button type="button" className="size-9.5 inline-flex items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800">
-            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2a6 6 0 00-6 6v4H5a1 1 0 000 2h14a1 1 0 000-2h-1V8a6 6 0 00-6-6zM12 22a2 2 0 002-2H10a2 2 0 002 2z" />
-            </svg>
-          </button>
+          {/* Notification Dropdown */}
+          <div ref={notificationRef}>
+            <NotificationDropdown
+              notifications={notifications}
+              isOpen={isNotificationOpen}
+              onToggle={() => setIsNotificationOpen(!isNotificationOpen)}
+              onMarkAsRead={handleMarkAsRead}
+              onMarkAllAsRead={handleMarkAllAsRead}
+              unreadCount={unreadCount}
+            />
+          </div>
 
           {/* Avatar Dropdown */}
-          <div className="relative">
+          <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setDropdownOpen(!isDropdownOpen)}
               className="flex items-center text-sm rounded-full"
