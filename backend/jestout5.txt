@@ -1,0 +1,130 @@
+ts-jest[ts-jest-transformer] (WARN) Define `ts-jest` config under `globals` is deprecated. Please do
+transform: {
+    <transform_regex>: ['ts-jest', { /* ts-jest config goes here in Jest */ }],
+},
+See more at https://kulshekhar.github.io/ts-jest/docs/getting-started/presets#advanced
+  console.log
+    [dotenv@17.2.0] injecting env (6) from .env (tip: ⚙️  suppress all logs with { quiet: true })
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: ⚙️  enable debug logging with { debug: true })
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: ⚙️  suppress all logs with { quiet: true })
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild)
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+(node:22272) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[0mPOST /api/auth/register [32m201[0m 134.693 ms - 472[0m
+  console.log
+    REGISTER_RES 201 {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODcyMTUxMTJiZGY0NjZmZWZhYjAyNGUiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc1MjMwNjk2MiwiZXhwIjoxNzUyOTExNzYyfQ.KMla8mhm2uN2Ppcaa-aqMt9Ur9OAN9jfp5-O5QEcsRs',
+      user: {
+        username: 'bob',
+        email: 'bob@ex.com',
+        password: '$2b$10$7/ea9HoUmLZu56w35HA6I.yeMq4x4eEdfriDujCEhsAPq4PYMV/nu',
+        role: 'USER',
+        banned: false,
+        _id: '687215112bdf466fefab024e',
+        createdAt: '2025-07-12T07:56:01.921Z',
+        updatedAt: '2025-07-12T07:56:01.921Z',
+        __v: 0
+      }
+    }
+
+      at Object.<anonymous> (tests/auth.test.ts:12:13)
+
+[0mPOST /api/auth/login [32m200[0m 89.951 ms - 472[0m
+PASS tests/auth.test.ts
+  Auth routes
+    √ registers a user then logs in (296 ms)
+
+  console.log
+    [dotenv@17.2.0] injecting env (6) from .env (tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`)
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' })
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] })
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: 🔐 encrypt with dotenvx: https://dotenvx.com)
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+[0mPOST /api/auth/register [32m201[0m 98.511 ms - 474[0m
+[0mPOST /api/auth/login [32m200[0m 98.051 ms - 474[0m
+[0mPOST /api/questions [32m201[0m 7.233 ms - 283[0m
+[0mGET /api/tags [32m200[0m 3.000 ms - 60[0m
+PASS tests/tags.test.ts
+  Tags route
+    √ returns popular tags with counts (239 ms)
+
+  console.log
+    [dotenv@17.2.0] injecting env (6) from .env (tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild)
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] })
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' })
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+  console.log
+    [dotenv@17.2.0] injecting env (0) from .env (tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`)
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+[0mPOST /api/auth/register [32m201[0m 113.423 ms - 476[0m
+[0mPOST /api/auth/login [32m200[0m 62.957 ms - 476[0m
+[0mPOST /api/questions [32m201[0m 4.600 ms - 279[0m
+  console.log
+    CREATE_RES 201 {
+      question: {
+        title: 'Test question',
+        body: 'Some body content here',
+        tags: [ 'tag1', 'tag2' ],
+        author: '68721515db82e26944e8794e',
+        views: 0,
+        status: 'published',
+        _id: '68721515db82e26944e87958',
+        createdAt: '2025-07-12T07:56:05.688Z',
+        updatedAt: '2025-07-12T07:56:05.688Z',
+        __v: 0
+      }
+    }
+
+      at Object.<anonymous> (tests/questions.test.ts:18:13)
+
+[0mGET /api/questions [32m200[0m 3.467 ms - 307[0m
+PASS tests/questions.test.ts
+  Questions routes
+    √ creates a question then lists it (211 ms)
+
+Test Suites: 3 passed, 3 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        8 s, estimated 10 s
+Ran all test suites.

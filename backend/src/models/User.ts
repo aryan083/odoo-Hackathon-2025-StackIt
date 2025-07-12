@@ -52,7 +52,11 @@ UserSchema.methods.comparePassword = async function (candidate: string): Promise
 
 UserSchema.methods.generateJWT = function (): string {
   const secret: jwt.Secret = (process.env.JWT_SECRET ?? 'secret_key') as jwt.Secret;
-  const expiresInSeconds = process.env.JWT_EXPIRES ? Number(process.env.JWT_EXPIRES) : 60 * 60 * 24 * 7; // default 7 days
+  // Accept string (e.g., "7d") but convert to seconds for type safety (default 7 days)
+  const expiresValue = process.env.JWT_EXPIRES ?? '7d';
+  const expiresInSeconds = /^[0-9]+$/.test(expiresValue)
+    ? Number(expiresValue)
+    : 60 * 60 * 24 * 7; // 7d fallback if not numeric
   const signOptions: jwt.SignOptions = {
     expiresIn: expiresInSeconds,
   };

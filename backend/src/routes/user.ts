@@ -33,14 +33,16 @@ router.put(
     const current = (req as RequestWithUser).user;
 
     if (req.body.username && req.body.username !== current.username) {
-      if (await User.exists({ username: req.body.username }))
+      if (await User.exists({ username: req.body.username })) {
         res.status(409).json({ message: 'Username already taken' });
-      return;
+        return;
+      }
     }
     if (req.body.email && req.body.email !== current.email) {
-      if (await User.exists({ email: req.body.email }))
+      if (await User.exists({ email: req.body.email })) {
         res.status(409).json({ message: 'Email already taken' });
         return;
+      }
     }
 
     Object.assign(current, req.body);

@@ -16,6 +16,16 @@ const PORT = process.env.PORT || 3000;
   const server = http.createServer(app);
   initSocket(server);
 
+  // Handle common startup errors (e.g. port already in use)
+  server.on('error', (err: NodeJS.ErrnoException) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`❌  Port ${PORT} is already in use. Set PORT env variable to a different value or free the port.`);
+    } else {
+      console.error('❌  Server failed to start:', err);
+    }
+    process.exit(1);
+  });
+
   server.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
   });

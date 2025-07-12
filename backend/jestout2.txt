@@ -1,0 +1,30 @@
+ts-jest[ts-jest-transformer] (WARN) Define `ts-jest` config under `globals` is deprecated. Please do
+transform: {
+    <transform_regex>: ['ts-jest', { /* ts-jest config goes here in Jest */ }],
+},
+See more at https://kulshekhar.github.io/ts-jest/docs/getting-started/presets#advanced
+  console.log
+    [dotenv@17.2.0] injecting env (6) from .env (tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit)
+
+      at _log (node_modules/dotenv/lib/main.js:136:11)
+
+FAIL tests/auth.test.ts
+  ● Test suite failed to run
+
+    [96msrc/models/User.ts[0m:[93m58[0m:[93m5[0m - [91merror[0m[90m TS2322: [0mType 'string' is not assignable to type 'number | StringValue | undefined'.
+
+    [7m58[0m     expiresIn,
+    [7m  [0m [91m    ~~~~~~~~~[0m
+
+      [96mnode_modules/@types/jsonwebtoken/index.d.ts[0m:[93m43[0m:[93m5[0m
+        [7m43[0m     expiresIn?: StringValue | number;
+        [7m  [0m [96m    ~~~~~~~~~[0m
+        The expected type comes from property 'expiresIn' which is declared here on type 'SignOptions'
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        7.086 s
+Ran all test suites.
+(node:14544) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
