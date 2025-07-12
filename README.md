@@ -1,5 +1,9 @@
 # StackIt - A Minimal Q&A Forum Platform
 
+## Video Link
+
+https://www.youtube.com/watch?v=x27ApIMrp6g
+
 ## 🧠 Problem Statement
 
 StackIt aims to simplify the online Q&A experience for learners, educators, and developers. Most existing platforms are feature-heavy, cluttered, and overwhelming for newcomers. StackIt solves this by focusing only on the core functionalities: **asking questions**, **answering**, **voting**, and **collaborating** - without distractions.
@@ -14,12 +18,6 @@ This project addresses **Problem Statement 2**: Building a collaborative forum t
 **Team Members:** Aryan Mahida, Jay Mangukiya, Umang Hirani
 **Team Lead Details:** Contact: 70463 00800
 **Contact Email:** aryanmahida2@gmaill.com, jaytm2210@gmail.com, umanghirani.exe@gmail.com
-
----
-
-## 🌐 Live Demo
-
-> 🚧 *Coming Soon...*
 
 ---
 
