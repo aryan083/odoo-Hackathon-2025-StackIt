@@ -134,7 +134,8 @@ const Header: React.FC = () => {
               className="flex items-center text-sm rounded-full"
               aria-expanded={isDropdownOpen}
             >
-              <img className="h-8 w-8 rounded-full" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User avatar" />
+                <img src="https://avatar.iran.liara.run/public" className="h-8 w-8 rounded-full" />
+              {/* <img className="h-8 w-8 rounded-full" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User avatar" /> */}
             </button>
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 rounded-lg border border-gray-200 bg-white p-2 shadow-md dark:border-neutral-700 dark:bg-neutral-800">
@@ -142,7 +143,7 @@ const Header: React.FC = () => {
                 <a href="#" className="block rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700">Purchases</a>
                 <a href="#" className="block rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700">Account Settings</a>
                 <div className="my-2 border-t border-gray-100 dark:border-neutral-700" />
-                <a href="#" className="block rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700">Log Out</a>
+                <a href="/signup" className="block rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700">Log Out</a>
               </div>
             )}
           </div>
